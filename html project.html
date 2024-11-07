@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Explore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-image: url('travel.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow-x: hidden;
+            position: relative;
+            height: auto;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.light-mode {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        header {
+            background-color: rgba(0, 51, 102, 0.8);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: slideDown 0.5s ease-out;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+        }
+        nav {
+            margin: 10px 0;
+        }
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffcc00;
+        }
+        .toggle-mode {
+            margin-top: 10px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+        }
+        .hero {
+            margin-top: 80px; /* Adjusted for fixed header */
+            background-image: url('"move.jpg"');
+            background-size: cover;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .hero h1 {
+            font-size: 50px;
+            margin: 0;
+            padding: 20px;
+            background-color: rgba(0, 51, 102, 0.7);
+            border-radius: 10px;
+            animation: popIn 0.5s ease-out;
+        }
+        .slider {
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+            width: 100%;
+            max-height: 300px;
+        }
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 400%; /* Four images */
+            height: 100%;
+        }
+        .slide {
+            width: 25%; /* 100% divided by 4 */
+            flex-shrink: 0;
+        }
+        .slide img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        section {
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .packages {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .package {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 300px;
+            text-align: center;
+            opacity: 0;
+            animation: slideUp 0.5s ease forwards;
+        }
+        .package:nth-child(1) { animation-delay: 0.1s; }
+        .package:nth-child(2) { animation-delay: 0.2s; }
+        .package:nth-child(3) { animation-delay: 0.3s; }
+        .package:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .package img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #007BFF;
+        }
+        .package h3 {
+            margin: 15px 0;
+            color: #003366;
+        }
+        .package p {
+            margin: 10px 0;
+            padding: 0 15px;
+        }
+        .rating {
+            color: #ffcc00;
+        }
+        .contact {
+            background: rgba(230, 247, 255, 0.8);
+            text-align: center;
+            border-top: 2px solid #003366;
+        }
+        .contact h2 {
+            margin-bottom: 20px;
+            color: #003366;
+        }
+        input, textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 51, 102, 0.8);
+            color: white;
+            position: relative;
+        }
+        .scrolling-text {
+            background-color: rgba(0, 51, 102, 0.9);
+            color: #ffcc00;
+            font-weight: bold;
+            padding: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+            animation: scroll 10s linear infinite;
+            text-align: center;
+            margin: 10px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes scroll {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+        @media (max-width: 768px) {
+            .packages {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes popIn {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="light-mode">
+
+<header>
+    <h1>Travel Explore</h1>
+    <button class="toggle-mode" onclick="toggleMode()"> Dark/Light Mode</button>
+    <nav>
+        <a href="#packages">Packages</a>
+        <a href="#about">About</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#faqs">FAQs</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <h1>Your Adventure Awaits!</h1>
+</div>
+
+<div class="slider">
+    <div class="slides">
+        <div class="slide"><img src=""beach.jpg"" alt="Beach"></div>
+        <div class="slide"><img src=""mountain.jpg"" alt="Mountains"></div>
+        <div class="slide"><img src=""city.jpg"" alt="City"></div>
+        <div class="slide"><img src=""adventure.jpg"" alt="Adventure"></div>
+    </div>
+</div>
+
+<section id="packages">
+    <h2 style="text-align: center; color: #003366;">Travel Packages</h2>
+    <div class="packages">
+        <div class="package">
+            <img src="beach.jpg" alt="Beach Package">
+            <h3>Beach Getaway</h3>
+            <p>Relax on the sunny shores and enjoy the ocean breeze.</p>
+            <p><strong>Price: $499</strong></p>
+            <p class="rating">Rating: ★★★★☆ (4.5)</p>
+        </div>
+        <div class="package">
+            <img src="mountain.jpg" alt="Mountain Package">
+            <h3>Mountain Adventure</h3>
+            <p>Experience breathtaking views and thrilling hikes.</p>
+            <p><strong>Price: $599</strong></p>
+            <p class="rating">Rating: ★★★★☆ (4.7)</p>
+        </div>
+        <div class="package">
+            <img src="city.jpg" alt="City Package">
+            <h3>City Explorer</h3>
+            <p>Discover the vibrant culture and nightlife of the city.</p>
+            <p><strong>Price: $399</strong></p>
+            <p class="rating">Rating: ★★★☆☆ (3.9)</p>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <h2>About Us</h2>
+    <p>At Travel Explore, we believe that every journey tells a story. Our mission is to provide unforgettable travel experiences tailored to your desires. Whether you're seeking relaxation, adventure, or cultural immersion, our expertly crafted packages cater to all tastes. Join us in exploring the world, one trip at a time!</p>
+</section>
+
+<section id="testimonials">
+    <h2>Testimonials</h2>
+    <p><strong>KUMAR:</strong> "Travel Explore made my dream vacation come true! The service was excellent and everything was well-organized."</p>
+    <p><strong>AMITAB:</strong> "An unforgettable experience! I can't wait to book my next trip!"</p>
+    <p><strong>JETTY:</strong> "The best travel agency I've ever used. Highly recommend!"</p>
+</section>
+
+<section id="faqs">
+    <h2>Frequently Asked Questions</h2>
+    <h3>What types of packages do you offer?</h3>
+    <p>We offer a variety of packages including beach getaways, mountain adventures, city explorations, and cultural tours.</p>
+    <h3>How do I book a package?</h3>
+    <p>You can book a package by filling out the contact form below or directly contacting us via phone or email.</p>
+</section>
+
+<section id="contact">
+    <div class="contact">
+        <h2>Contact Us</h2>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <a href="index.html">Send Message</a>
+    </div>
+</section>
+
+<footer>
+    <div class="scrolling-text">
+        ✈️ Explore the World with Us! 🌍 | Your Adventure Awaits! 🌄 | Book Your Dream Vacation Today! 🌅
+    </div>
+    <p>&copy; 2024 Travel Explore. All rights reserved.</p>
+</footer>
+
+<script>
+    function toggleMode() {
+        const body = document.body;
+        body.classList.toggle('light-mode');
+        body.classList.toggle('dark-mode');
+        const isLightMode = body.classList.contains('light-mode');
+        body.style.backgroundColor = isLightMode ? '#f0f0f0' : '#121212';
+        body.style.color = isLightMode ? '#333' : '#f0f0f0';
+    }
+</script>
+
+</body>
+</html>
